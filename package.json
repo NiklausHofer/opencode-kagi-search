@@ -1,0 +1,41 @@
+{
+  "name": "opencode-kagi-search",
+  "version": "0.1.0",
+  "description": "OpenCode plugin for Kagi v1 search and extract APIs",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "opencode",
+    "kagi",
+    "search",
+    "extract",
+    "plugin"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@kagi/api": "github:kagisearch/kagi-openapi-typescript",
+    "@opencode-ai/plugin": "^1.14.48"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "typescript": "^6.0.3"
+  }
+}

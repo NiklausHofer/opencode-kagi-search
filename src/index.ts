@@ -1,5 +1,6 @@
 import { tool, type Plugin } from "@opencode-ai/plugin";
-import { createConfiguration as createKagiConfiguration, ExtractApi, SearchApi } from "@kagi/api";
+// Local vendored wrapper for the upstream generated Kagi client.
+import { createConfiguration as createKagiConfiguration, ExtractApi, SearchApi } from "./vendor/kagi-api.js";
 import { RUNTIME_CONFIG, runKagiOperation } from "./util.js";
 import type { ExtractRequest, SearchRequest } from "./types.js";
 

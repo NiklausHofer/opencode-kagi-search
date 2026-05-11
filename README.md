@@ -1,8 +1,20 @@
 # opencode-kagi-search
 
-OpenCode plugin that exposes Kagi v1 Search and Extract APIs as explicit tools, using the official OpenAPI TypeScript client from `kagisearch/kagi-openapi-typescript` via a Git dependency.
+Kagi Search and Extract tools for OpenCode
+
+## Requirements
+
+Set `KAGI_API_KEY` in your shell before starting OpenCode.
 
 ## Install
+
+### OpenCode
+
+Install the package:
+
+```bash
+npm install -g opencode-kagi-search
+```
 
 Add to `opencode.json`:
 
@@ -10,14 +22,19 @@ Add to `opencode.json`:
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": ["opencode-kagi-search"],
-  // Optionally disable EXA search
-  "permission": { "websearch": "deny" }
+  // Add to prefer kagi for search
+  "permission": { "websearch": "deny", "webfetch": "deny" }
 }
 ```
 
-## Required Environment Variable
+Local checkout:
 
-Set `KAGI_API_KEY` in your shell environment before starting OpenCode.
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["/absolute/path/to/opencode-kagi-search"]
+}
+```
 
 ## Tools
 
@@ -66,7 +83,28 @@ npm run build
 
 ## Publish
 
+Make sure you are logged in to npm first:
+
+```bash
+npm whoami
+```
+
+Build and verify the package locally:
+
+```bash
+npm install
+npm run typecheck
+npm run build
+```
+
+Bump the version you want to release:
+
 ```bash
 npm version patch
+```
+
+Publish to npm:
+
+```bash
 npm publish
 ```

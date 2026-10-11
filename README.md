@@ -2,9 +2,11 @@
 
 Kagi Search and Extract tools for OpenCode
 
+Requires OpenCode 2 (plugin API v2).
+
 ## Requirements
 
-Set `KAGI_API_KEY` in your shell before starting OpenCode.
+Set `KAGI_API_KEY` in the environment of the OpenCode server process before starting OpenCode.
 
 ## Install
 
@@ -21,7 +23,7 @@ Add to `opencode.json`:
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-kagi-search"],
+  "plugins": ["opencode-kagi-search"],
   // Add to prefer kagi for search
   "permission": { "websearch": "deny", "webfetch": "deny" }
 }
@@ -29,10 +31,16 @@ Add to `opencode.json`:
 
 Local checkout:
 
+```bash
+npm install
+```
+
+Add to `opencode.json`:
+
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["/absolute/path/to/opencode-kagi-search"]
+  "plugins": ["/absolute/path/to/opencode-kagi-search"]
 }
 ```
 

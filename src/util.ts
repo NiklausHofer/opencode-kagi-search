@@ -10,13 +10,14 @@ export const RUNTIME_CONFIG: RuntimeConfig = {
 export async function runKagiOperation<T>(
   operation: (signal: AbortSignal) => Promise<T>,
   context: RequestContext,
+  options: { signal?: AbortSignal } = {},
 ): Promise<ToolResult<T>> {
   const start = Date.now();
   let retriesUsed = 0;
 
   for (let attempt = 0; attempt <= context.retries; attempt++) {
     try {
-      const data = await withTimeout(operation, context.timeoutMs);
+      const data = await withTimeout(operation, context.timeoutMs, options.signal);
       return {
         ok: true,
         data,
@@ -115,9 +116,12 @@ function getRequestId(error: unknown): string | undefined {
 async function withTimeout<T>(
   operation: (signal: AbortSignal) => Promise<T>,
   timeoutMs: number,
+  externalSignal?: AbortSignal,
 ): Promise<T> {
   const controller = new AbortController();
+  const onExternalAbort = () => controller.abort();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  externalSignal?.addEventListener("abort", onExternalAbort, { once: true });
   const signal = controller.signal;
 
   const timeoutPromise = new Promise<T>((_, reject) => {
@@ -136,5 +140,6 @@ async function withTimeout<T>(
     return await Promise.race([operation(signal), timeoutPromise]);
   } finally {
     clearTimeout(timeout);
+    externalSignal?.removeEventListener("abort", onExternalAbort);
   }
 }
